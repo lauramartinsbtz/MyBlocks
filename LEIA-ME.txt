@@ -1,0 +1,73 @@
+MYBLOCKS v0.9
+
+Extraia a pasta e abra index.html no Chrome ou Edge. Os arquivos Blockly são
+carregados por CDN; é necessário internet ao abrir a página.
+
+Novidades:
+- Blocos e categorias em inglês: Control, Actuators, Logic, Math e Variables.
+- analogRead está em Actuators, junto com digitalWrite e analogWrite.
+- delay usa milissegundos: 1000 corresponde a 1 segundo.
+- analogRead pin: digite o número de um GPIO que tenha ADC na sua placa.
+  O bloco retorna Number e encaixa em set x to, comparações e condições.
+- Para mostrar a leitura: loop > set x to [analogRead pin 4] > print x > delay 1000.
+  O programa dentro de loop repete até clicar em Parar.
+- analogWrite tem apenas pin e value, de 0 a 255.
+- Bloco de sorteio removido.
+- Conectar USB limpa as mensagens anteriores e mostra USB ping e USB pong,
+  com pong somente após a resposta real do firmware. Mensagens de boot,
+  confirmações de escrita e valores brutos do protocolo não aparecem no console.
+  Valores aparecem quando print é executado; erros relevantes continuam visíveis.
+
+IMPORTANTE: grave o NOVO firmware incluído em
+firmware/myblocks_esp32/myblocks_esp32.ino para habilitar analogRead e o protocolo
+atual. Abra no Arduino IDE com Arduino-ESP32 3.x e selecione sua placa com BLE.
+USB utiliza 115200 baud; para ESP32-S3 com USB nativo, configure USB CDC on Boot
+conforme sua placa. BLE usa o serviço UART 6e400001-b5a3-f393-e0a9-e50e24dcca9e.
+
+O painel Código gera sketch Arduino. Executar usa o firmware de comunicação e
+interpreta os blocos pelo navegador, sem enviar ou compilar o sketch.
+Só use GPIOs expostos e apropriados da sua placa; analogRead exige um GPIO ADC.
+A interface permite GPIO 0 a 48, mas a disponibilidade depende do modelo.
+
+Verificações desta entrega: sintaxe JavaScript; testes com respostas seriais
+simuladas de ping, analogRead, atribuição/print, PWM e delay; integridade do ZIP.
+O firmware não foi compilado nem testado em uma placa física nesta entrega.
+
+Imagens: logo MyBlocks/MyLab no canto superior esquerdo do ambiente;
+imagem com robô e ENTRAR na tela de entrada, clicável ou acionável com Enter.
+As imagens estão incluídas na pasta assets e mantêm o fundo transparente.
+
+Atualizações v0.9: categorias em inglês; título MyBlocks; delay com campo inteiro
+em milissegundos; pinMode gerado somente em setup, sem repetir o mesmo pino;
+Serial.begin gerado somente se houver print conectado ao loop. Comentário
+do sketch: //MyBlocks by Openrobotics. Firmware mantido da versão anterior.
+
+SERVO 9G (v0.9)
+Em Actuators, use Servo pin [GPIO] angle [0..180].
+0 desativa o sinal e libera a posição; 1..180 define a posição em graus.
+Isso não corta fisicamente a alimentação do servo. Para desligar a energia
+é necessário um circuito de chaveamento externo.
+Instale a biblioteca ESP32Servo no gerenciador de bibliotecas do Arduino IDE
+(compatível com Arduino-ESP32 3.x) e grave o novo firmware incluído.
+O código Arduino gerado também inclui ESP32Servo quando houver bloco Servo.
+Use alimentação adequada ao servo (normalmente 5 V) e GND comum com ESP32;
+ligue o sinal ao GPIO indicado no bloco. Não alimente o servo pelo GPIO.
+Não use Servo e analogWrite simultaneamente no mesmo GPIO.
+Firmware ainda requer validação na placa física.
+
+TEMPERATURES DS18B20 (v0.9)
+Bloco em Actuators: Temperatures pin [GPIO] °C. Retorna Number, com decimais.
+Exemplo: loop > set x to [Temperatures pin 4] > print x > delay 1000.
+A variável guarda a leitura e pode ser usada ou mostrada posteriormente.
+USB e BLE usam o mesmo protocolo. Leitura só aparece no console com print.
+O bloco lê o primeiro DS18B20 encontrado na porta digitada (índice 0).
+Instale OneWire (Paul Stoffregen), DallasTemperature (Miles Burton) e
+ESP32Servo no Arduino IDE, depois grave o NOVO firmware incluído.
+Ligue VDD a 3,3 V, GND ao GND comum e DQ ao GPIO escolhido. Use resistor
+pull-up de 4,7 kΩ entre DQ e 3,3 V se o módulo não tiver esse resistor.
+Use alimentação de três fios; esta versão não foi validada em modo parasita.
+Um GPIO exclusivo de entrada não serve para OneWire. Não compartilhe a porta
+com servo ou outra saída. A conversão pode levar cerca de 750 ms.
+Sensor ausente ou desconectado gera erro de execução, sem salvar -127 como
+leitura real. O sketch Arduino gerado usa a biblioteca diretamente.
+Firmware ainda requer compilação e validação na placa física.

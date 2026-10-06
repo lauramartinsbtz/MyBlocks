@@ -1,0 +1,31 @@
+window.myToolbox = {kind:'categoryToolbox',contents:[
+  {kind:'category',name:'Control',colour:'#d9d900',contents:[
+    {kind:'block',type:'inicio'},
+    {kind:'block',type:'esperar_ms',fields:{MS:1000}}
+  ]},
+  {kind:'category',name:'Actuators',colour:'#009943',contents:[
+    {kind:'block',type:'digital_write'},
+    {kind:'block',type:'analog_write'},
+    {kind:'block',type:'analog_read'},
+    {kind:'block',type:'servo_write'},
+    {kind:'block',type:'temperatures'}
+  ]},
+  {kind:'category',name:'Logic',colour:'#4682B4',contents:[
+    {kind:'block',type:'controls_if'},
+    {kind:'block',type:'logica_comparacao',inputs:{A:{shadow:{type:'numero_inteiro',fields:{NUM:0}}},B:{shadow:{type:'numero_inteiro',fields:{NUM:0}}}}},
+    {kind:'block',type:'logic_boolean'},
+    {kind:'block',type:'logic_operation'},
+    {kind:'block',type:'repita_enquanto'},
+    {kind:'block',type:'para_variavel',inputs:{FROM:{shadow:{type:'numero_inteiro',fields:{NUM:0}}},TO:{shadow:{type:'numero_inteiro',fields:{NUM:10}}},BY:{shadow:{type:'numero_inteiro',fields:{NUM:1}}}}},
+    {kind:'block',type:'repita_vezes',inputs:{TIMES:{shadow:{type:'numero_inteiro',fields:{NUM:2}}}}}
+  ]},
+  {kind:'category',name:'Math',colour:'#2F5DA8',contents:[
+    {kind:'block',type:'numero_inteiro'},
+  ]},
+  {kind:'category',name:'Variables',colour:'#C45A86',contents:[
+    {kind:'button',text:'Create variable',callbackKey:'CREATE_VARIABLE'},
+    {kind:'block',type:'atribuir_inteiro',inputs:{VALUE:{shadow:{type:'numero_inteiro',fields:{NUM:0}}}}},
+    {kind:'block',type:'variavel_valor'},
+    {kind:'block',type:'exibir_variavel'}
+  ]}
+]};
